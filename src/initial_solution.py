@@ -16,18 +16,26 @@ def get_movements_and_initialSolutionGraph(graph, num_colors):
         print("Candidatos: " + str(candidatos)) #Mostra quais são os visinhos diretos que podem ser inuncados
         print("Troca Cores de: " + str(neighbors)) #Mostra quais já estão inundados e vão trocar de cor
 
+        candidato = escolheUmCandidato(candidatos)
 
-        new_color = randrange(0,num_colors) # Escolhe uma cor aleatória
+        #new_color = randrange(0,num_colors) # Escolhe uma cor aleatória
+        new_color = graph[candidato]['color']
 
         print("Nova cor: " + str(new_color))
         
         movements = movements + 1
         initial_solution.append((new_color, 1))
-        fillGraph2(graph, neighbors, new_color)
+        fillGraph(graph, neighbors, new_color)
 
-        print(graph)
+        #print(graph)
 
     return movements, initial_solution
+
+def escolheUmCandidato(candidatos):
+    candidato = candidatos[randrange(0, len(candidatos))]
+
+    return candidato
+
     
 def filldoneGraph(graph):
     src = graph[0]['color']
@@ -60,31 +68,8 @@ def get_neighborsGraph(graph, neighbors, visitados, candidatos,  posicao=0):
 
 
 
-    # for i in graph[posicao]['edges']:
-    #     print("Visitados: " + str(i))
-    #     jaVisitado = False
-    #     for j in neighbors:
-    #         if j == i:
-    #             jaVisitado = True
-    #     if jaVisitado:
-    #         continue
-    #
-    #
-    #     if (graph[i]['color'] == pivotColor):
-    #         # visit = not any(posicao == i for i in visitados)
-    #         # if visit:
-    #         Visit = False
-    #         for j in visitados:
-    #             if j == i:
-    #                 Visit = True
-    #         if not Visit:
-    #             visitados.append(i)
-    #             get_neighborsGraph(graph, neighbors, visitados, i)
 
-
-
-
-def fillGraph2(graph, neighbors, new_color):
+def fillGraph(graph, neighbors, new_color):  #Colore todos os que estão inundados com a nova cor
     for i in neighbors:
         graph[i]['color'] = new_color
     return
